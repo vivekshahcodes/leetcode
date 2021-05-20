@@ -11,7 +11,7 @@ public:
         }
         
         for(auto i:candies){
-            if(i+extraCandies>=g){
+            if(i+extraCandies >= g){
                 ans.push_back(true);
             }else{
                 ans.push_back(false);
