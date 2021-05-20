@@ -5,7 +5,7 @@ public:
         vector<int> v(nums.size());
         v[0] = nums[0];
         
-        for(int i=1;i<nums.size();i++){
+        for(int i=1; i<nums.size(); i++){
             v[i] = v[i-1] + nums[i];
         }
         
