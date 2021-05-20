@@ -5,7 +5,7 @@ public:
         string ans = "";
         
         for(int i=0;i<address.length();i++){
-            if(address[i]=='.'){
+            if(address[i] == '.'){
                 ans += "[.]";
             }else{
                 ans += address[i];
