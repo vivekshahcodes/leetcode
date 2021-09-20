@@ -2,7 +2,7 @@ class Solution {
 public:
     string minWindow(string s, string t) {
         
-        map<char,int> str, pattern;
+        unordered_map<char,int> str, pattern;
         
         for(int i=0;i<t.length();i++){
             pattern[t[i]]++;
