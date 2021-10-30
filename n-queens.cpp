@@ -2,40 +2,12 @@ class Solution {
 public:
     
     vector<vector<string>> ans;
+    bitset<25> col, d1, d2;
     
     bool isValid(int a[][11], int i, int j, int n){
         
-        for(int x = 0; x < n; x++){
-            
-            if(a[x][j] == 1){
-                return false;
-            }
-        }
-        
-        int x = i;
-        int y = j;
-        
-        while(x >= 0 && y >= 0){
-            
-            if(a[x][y] == 1){
-                return false;
-            }
-            
-            x--;
-            y--;
-        }
-        
-        x = i;
-        y = j;
-        
-        while(x >= 0 && y < n){
-            
-            if(a[x][y] == 1){
-                return false;
-            }
-            
-            x--;
-            y++;
+        if(col[j] || d1[i+j] || d2[i-j+n]){
+            return false;
         }
         
         return true;
@@ -75,6 +47,9 @@ public:
             if(isValid(a,i,j,n)){
                 
                 a[i][j] = 1;
+                col[j] = true;
+                d1[i+j] = true;
+                d2[i-j+n] = true;
                 
                 bool subProblem = nQueens(a,i+1,n);
                 
@@ -83,6 +58,9 @@ public:
                 }
                 
                 a[i][j] = 0;
+                col[j] = false;
+                d1[i+j] = false;
+                d2[i-j+n] = false;
             }
         }
         
