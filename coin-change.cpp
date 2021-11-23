@@ -7,17 +7,17 @@ public:
         
         for(int i = 1; i <= amount; i++){
             
-            int curr = 10001;
+            dp[i] = 10001;
             
             for(int j = 0; j < coins.size(); j++){
                 
                 if(i - coins[j] >= 0){
                     
-                    curr = min(curr, dp[i - coins[j]]);
+                    dp[i] = min(dp[i], dp[i - coins[j]]);
                 }
             }
-                        
-            dp[i] = curr + 1;
+            
+            dp[i]++;
             
         }
         
