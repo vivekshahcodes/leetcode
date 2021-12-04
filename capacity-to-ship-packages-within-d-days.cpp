@@ -28,7 +28,13 @@ public:
     
     int binarySearch(vector<int>& weights, int n, int days){
         
-        int l = 0, r = 1e9;
+        int total = 0;
+        
+        for(int i = 0; i < n; i++){
+            total += weights[i];
+        }
+        
+        int l = 0, r = total;
         
         while(l + 1 < r){
             
