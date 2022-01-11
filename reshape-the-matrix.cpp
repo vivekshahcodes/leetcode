@@ -1,8 +1,6 @@
 class Solution {
 public:
     vector<vector<int>> matrixReshape(vector<vector<int>>& mat, int r, int c) {
-        
-        vector<vector<int>> newMatrix(r,vector<int>(c));
             
         int n = mat.size();
         int m = mat[0].size();
@@ -10,6 +8,8 @@ public:
         if(n*m != r*c){
             return mat;
         }
+        
+        vector<vector<int>> newMatrix(r,vector<int>(c));
         
         int newI = 0, newJ = 0;
         
