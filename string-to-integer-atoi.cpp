@@ -21,19 +21,21 @@ public:
         
         while(i<n){
             
-            if(s[i]-'0' < 0 || s[i] - '0' > 9) break;
+            int c = s[i] - '0';
+            
+            if(c < 0 || c > 9) break;
             
             if(negative){
                 
-                if(ans >= (INT_MIN + (s[i] - '0')) / 10){
-                    ans = ans * 10 - (s[i] - '0');
+                if(ans >= (INT_MIN + c) / 10){
+                    ans = ans * 10 - c;
                 }else{
                     return INT_MIN;
                 }
             }else{
                 
-                if(ans <= (INT_MAX - (s[i] - '0')) / 10){
-                    ans = ans * 10 + (s[i] - '0');
+                if(ans <= (INT_MAX - c) / 10){
+                    ans = ans * 10 + c;
                 }else{
                     return INT_MAX;
                 }
