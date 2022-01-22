@@ -2,35 +2,33 @@ class Solution {
 public:
     string minWindow(string s, string t) {
         
-        unordered_map<char,int> str, pattern;
+        int n = s.length(), m = t.length(), start = 0, minSoFar = INT_MAX, minWindowStart = 0, c = 0;
+        unordered_map<int,int> str,pattern;
         
-        for(int i=0;i<t.length();i++){
+        for(int i=0;i<m;i++){
             pattern[t[i]]++;
         }
         
-        int c = 0, start = 0;
-        int windowStart = -1, windowSize = -1, minSoFar = INT_MAX;
-        
-        for(int i=0;i<s.length();i++){
-            
+        for(int i=0;i<n;i++){
             str[s[i]]++;
-            
             if(pattern[s[i]]>=str[s[i]]){
                 c++;
             }
             
-            if(c==t.length()){
+            if(c==m){
                 
-                while(str[s[start]]>pattern[s[start]]){
-                    str[s[start]]--;
+                int startingElement = s[start];
+                while(str[startingElement]>pattern[startingElement]){
+                    str[startingElement]--;
                     start++;
+                    startingElement = s[start];
                 }
                 
                 int windowSize = i-start+1;
                 
                 if(windowSize<minSoFar){
-                    windowStart = start;
                     minSoFar = windowSize;
+                    minWindowStart = start;
                 }
             }
         }
@@ -38,7 +36,8 @@ public:
         if(minSoFar == INT_MAX){
             return "";
         }else{
-            return s.substr(windowStart,minSoFar);
+            return s.substr(minWindowStart,minSoFar);
         }
+        
     }
 };
