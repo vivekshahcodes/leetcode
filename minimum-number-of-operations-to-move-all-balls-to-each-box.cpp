@@ -3,25 +3,26 @@ public:
     vector<int> minOperations(string boxes) {
         
         int n = boxes.length();
-        vector<int> v(n);
+        vector<int> v(n,0);
         
-        for(int i=0;i<n;i++){
-            int leftIndex = i-1;
-            int currDistance = 0;
-            while(leftIndex>=0){
-                if(boxes[leftIndex]=='1'){
-                    currDistance += i-leftIndex;
-                }
-                leftIndex--;
+        int curr = 0, total = 0;
+        
+        for(int i=1;i<n;i++){
+            if(boxes[i-1]=='1'){
+                curr++;
             }
-            int rightIndex = i+1;
-            while(rightIndex<n){
-                if(boxes[rightIndex]=='1'){
-                    currDistance += rightIndex-i;
-                }
-                rightIndex++;
+            total += curr;
+            v[i] += total;            
+        }
+        
+        curr = 0, total = 0;
+        
+        for(int i=n-1;i>=0;i--){
+            if(boxes[i+1]=='1'){
+                curr++;
             }
-            v[i] = currDistance;
+            total += curr;
+            v[i] += total;
         }
         
         return v;
