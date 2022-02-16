@@ -1,49 +1,29 @@
 class Solution {
 public:
     
-    vector<int> generateSubset(int i, vector<int> nums){
+    void findUniqueSubsets(int i, vector<int>& nums, int n, vector<int>& currentSubset, vector<vector<int>>& uniqueSubsets){
         
-        vector<int> sub;
+        uniqueSubsets.push_back(currentSubset);
         
-        int ind = 0;
-        
-        while(i > 0){
-            
-            if(i & 1)
-                sub.push_back(nums[ind]);
-            
-            ind++;
-            
-            i = i >> 1;
+        for(int ind=i;ind<n;ind++){
+            if(ind>i && nums[ind]==nums[ind-1]){
+                continue;
+            }
+            currentSubset.push_back(nums[ind]);
+            findUniqueSubsets(ind+1,nums,n,currentSubset,uniqueSubsets);
+            currentSubset.pop_back();
         }
-        
-        return sub;
     }
     
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
         
         int n = nums.size();
+        sort(nums.begin(),nums.end());
+        vector<vector<int>> uniqueSubsets;
+        vector<int> currentSubset;
         
-        vector<vector<int>> ans;
+        findUniqueSubsets(0,nums,n,currentSubset,uniqueSubsets);
         
-        set<vector<int>> s;
-        
-        for(int i = 0; i < (1 << n); i++){
-            
-            vector<int> v = generateSubset(i,nums);
-            
-            sort(v.begin(),v.end());
-            
-            if(s.count(v) == 0){
-                
-                ans.push_back(v);
-                s.insert(v);
-                
-            }
-            
-        }
-        
-        return ans;
-        
+        return uniqueSubsets;
     }
 };
