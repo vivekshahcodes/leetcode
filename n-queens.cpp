@@ -1,78 +1,63 @@
 class Solution {
 public:
     
-    vector<vector<string>> ans;
-    bitset<25> col, d1, d2;
+    unordered_set<int> row,column,diagonal,diagonal2;
     
-    bool isValid(int a[][11], int i, int j, int n){
-        
-        if(col[j] || d1[i+j] || d2[i-j+n]){
+    bool isValid(int i, int j){
+        if(row.count(i) || column.count(j) || diagonal.count(j-i) || diagonal2.count(i+j)){
             return false;
         }
-        
         return true;
     }
     
-    bool nQueens(int a[][11], int i, int n){
+    void allSolutions(int j, int n, vector<vector<int>>& curr, vector<vector<string>>& v){
         
-        if(i == n){
-            
-            vector<string> v;
-            
-            for(int x = 0; x < n; x++){
-                
-                string s;
-                
-                for(int y = 0; y < n; y++){
-                    
-                    if(a[x][y] == 1){
-                        s.push_back('Q');
+        if(j==n){
+            vector<string> currentBoard;
+            for(int r=0;r<n;r++){
+                string currRow;
+                for(int c=0;c<n;c++){
+                    if(curr[r][c]==0){
+                        currRow.push_back('.');
                     }else{
-                        s.push_back('.');
+                        currRow.push_back('Q');
                     }
-                    
                 }
-                
-                v.push_back(s);
-                
+                currentBoard.push_back(currRow);
             }
-            
-            ans.push_back(v);
-            
-            return false;
+            v.push_back(currentBoard);
+            return;
         }
         
-        for(int j = 0; j < n; j++){
-            
-            if(isValid(a,i,j,n)){
+        if(j>n){
+            return;
+        }
+        
+        for(int i=0;i<n;i++){
+            if(isValid(i,j)){
                 
-                a[i][j] = 1;
-                col[j] = true;
-                d1[i+j] = true;
-                d2[i-j+n] = true;
+                curr[i][j] = 1;
+                row.insert(i);
+                column.insert(j);
+                diagonal.insert(j-i);
+                diagonal2.insert(i+j);
                 
-                bool subProblem = nQueens(a,i+1,n);
+                allSolutions(j+1,n,curr,v);
                 
-                if(subProblem){
-                    return true;
-                }
-                
-                a[i][j] = 0;
-                col[j] = false;
-                d1[i+j] = false;
-                d2[i-j+n] = false;
+                curr[i][j] = 0;
+                row.erase(i);
+                column.erase(j);
+                diagonal.erase(j-i);
+                diagonal2.erase(i+j);
             }
         }
         
-        return false;
     }
     
-    vector<vector<string>> solveNQueens(int n) {
-        
-        int a[11][11] = {0};
-        
-        nQueens(a,0,n);
-        
-        return ans;
+    vector<vector<string>> solveNQueens(int n) {   
+        vector<vector<string>> v;
+        vector<vector<int>> curr(n,vector<int> (n,0));
+        allSolutions(0,n,curr,v);
+        return v;
     }
 };
