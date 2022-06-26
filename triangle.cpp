@@ -1,30 +1,128 @@
+//Recursion
+//TC - O(2^(n^2))
+//SC - O(n)
+
 class Solution {
 public:
     
-    int minSum(vector<vector<int>>& triangle, int i, int j, int n, vector<vector<int>>& dp){
+    int minPathSum(int i, int j, int n, vector<vector<int>>& triangle){
         
-        if(i==n-1){
-            return dp[i][j] = triangle[i][j];
-        }        
-        
-        if(dp[i][j]!=-1){
-            return dp[i][j];
+        if(i==n){
+            return 0;
         }
         
-        int first = triangle[i][j] + minSum(triangle,i+1,j,n,dp);
-        int second = triangle[i][j] + minSum(triangle,i+1,j+1,n,dp);
+        int first = minPathSum(i+1,j,n,triangle) + triangle[i][j];
+        int second = minPathSum(i+1,j+1,n,triangle) + triangle[i][j];
         
-        return dp[i][j] = min(first,second);
+        return min(first,second);   
         
     }
     
     int minimumTotal(vector<vector<int>>& triangle) {
         
         int n = triangle.size();
-        int m = triangle[n-1].size();
         
-        vector<vector<int>> dp(n, vector<int>(m,-1));
+        return minPathSum(0,0,n,triangle);
         
-        return minSum(triangle,0,0,n,dp);
+    }
+};
+
+
+//Memoization
+//TC - O(n^2)
+//SC - O(n) for the stack space + O(n^2) for the dp array
+
+class Solution {
+public:
+    
+    int minPathSum(int i, int j, int n, vector<vector<int>>& triangle, vector<vector<int>>& dp){
+        
+        if(i==n){
+            return 0;
+        }
+        
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+        
+        int first = minPathSum(i+1,j,n,triangle,dp) + triangle[i][j];
+        int second = minPathSum(i+1,j+1,n,triangle,dp) + triangle[i][j];
+        
+        return dp[i][j] = min(first,second);   
+        
+    }
+    
+    int minimumTotal(vector<vector<int>>& triangle) {
+        
+        int n = triangle.size();
+        
+        vector<vector<int>> dp(n, vector<int> (n, -1));
+        
+        return minPathSum(0,0,n,triangle,dp);
+        
+    }
+};
+
+
+//Tabulation
+//TC - O(n^2)
+//SC - O(n^2) for the dp array
+
+class Solution {
+public:
+    
+    int minimumTotal(vector<vector<int>>& triangle) {
+        
+        int n = triangle.size();
+        
+        vector<vector<int>> dp(n, vector<int> (n, 0));
+        
+        for(int j=0;j<n;j++){
+            dp[n-1][j] = triangle[n-1][j];
+        }
+        
+        for(int i=n-2;i>=0;i--){
+            for(int j=i;j>=0;j--){
+                int first = dp[i+1][j] + triangle[i][j];
+                int second = dp[i+1][j+1] + triangle[i][j];
+                dp[i][j] = min(first,second);
+            }
+        }
+        
+        return dp[0][0];
+        
+    }
+};
+
+
+//Space Optimization
+//TC - O(n^2)
+//SC - O(n) for the next and curr arrays
+
+class Solution {
+public:
+    
+    int minimumTotal(vector<vector<int>>& triangle) {
+        
+        int n = triangle.size();
+        
+        vector<int> next(n);
+        
+        for(int j=0;j<n;j++){
+            next[j] = triangle[n-1][j];
+        }
+        
+        for(int i=n-2;i>=0;i--){
+            vector<int> curr(n);
+            for(int j=i;j>=0;j--){
+                int first = next[j] + triangle[i][j];
+                int second = next[j+1] + triangle[i][j];
+                curr[j] = min(first,second);
+            }
+            next = curr;
+        }
+        
+        return next[0];
+        
     }
 };
