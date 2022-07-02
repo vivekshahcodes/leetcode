@@ -1,4 +1,6 @@
 //Recursion
+//TC - O(n)
+//SC - O(n) in case of a skew tree
 
 class Solution {
 public:
@@ -17,6 +19,8 @@ public:
 
 
 //Iterative
+//O(n)
+//O(n) in case of a skew tree
 
 class Solution {
 public:
