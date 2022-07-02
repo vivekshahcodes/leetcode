@@ -19,8 +19,8 @@ public:
 
 
 //Iterative
-//O(n)
-//O(n) in case of a skew tree
+//TC - O(n)
+//TC - O(n) in case of a skew tree
 
 class Solution {
 public:
