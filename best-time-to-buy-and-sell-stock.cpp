@@ -1,22 +1,22 @@
+//Solution
+//TC - O(n)
+//SC - O(1)
+
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-       
-        int curr = prices[0], ans = 0;
-
-        if(prices.size()==1){
-            cout<<ans;
-        }else{
-            for(auto i:prices){
-                if(i<curr){
-                    curr = i;
-                }else{
-                    ans = max(ans,i-curr);
-                }
+        
+        int n = prices.size();
+        int buyPrice = prices[0], profit = 0;
+        
+        for(int i=1;i<n;i++){
+            if(prices[i]>buyPrice){
+                profit = max(prices[i]-buyPrice,profit);
+            }else{
+                buyPrice = prices[i];
             }
         }
-
-        return ans;
         
+        return profit;
     }
 };
