@@ -1,46 +1,31 @@
+//Optimal Solution
+//TC - O(nlogn)
+//SC - O(1)
+
 class Solution {
 public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
         
+        int n = intervals.size();
+        sort(intervals.begin(),intervals.end());
         vector<vector<int>> ans;
         
-        sort(intervals.begin(),intervals.end());
-        
-        int f,s;
-        
-        for(int i=0;i<intervals.size();i++){
-            
-            if(i==0){
-                
-                f = intervals[i][0];
-                s = intervals[i][1];
-                
-                if(i==intervals.size()-1){
-                    ans.push_back({f,s});
-                }
-                
+        for(int i=0;i<n;i++){
+            int x = intervals[i][0], y = intervals[i][1];
+            if(ans.empty()){
+                ans.push_back({x,y});
             }else{
-                
-                if(intervals[i][0]<=s){
-                    
-                    s = max(s,intervals[i][1]);
-                    
+                int ansLen = ans.size();
+                int prevX = ans[ansLen-1][0], prevY = ans[ansLen-1][1];
+                if(x<=prevY){
+                    ans.pop_back();
+                    ans.push_back({prevX,max(prevY,y)});
                 }else{
-                    
-                    ans.push_back({f,s});
-                    
-                    f = intervals[i][0];
-                    s = intervals[i][1];
+                    ans.push_back({x,y});
                 }
-                
-                if(i==intervals.size()-1){
-                    ans.push_back({f,s});
-                }
-                
             }
         }
         
-        return ans;        
-        
+        return ans;
     }
 };
