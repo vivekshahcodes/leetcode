@@ -7,9 +7,7 @@ public:
     
     int maxAmount(int i, int n, vector<int>& nums){
         
-        if(i > n){
-            return 0;
-        }
+        if(i>n) return 0;
         
         int pick = maxAmount(i + 2, n, nums) + nums[i];
         int notPick = maxAmount(i + 1, n, nums);
@@ -21,6 +19,7 @@ public:
         
         int n = nums.size();
         if(n == 1) return nums[0];
+        
         int first = maxAmount(0, n - 2, nums);
         int second = maxAmount(1, n - 1, nums);
         
@@ -38,13 +37,8 @@ public:
     
     int maxAmount(int i, int n, vector<int>& nums, vector<int>& dp){
         
-        if(i > n){
-            return 0;
-        }
-        
-        if(dp[i] != -1){
-            return dp[i];
-        }
+        if(i>n) return 0;
+        if(dp[i] != -1) return dp[i];
         
         int pick = maxAmount(i + 2, n, nums, dp) + nums[i];
         int notPick = maxAmount(i + 1, n, nums, dp);
@@ -56,14 +50,11 @@ public:
         
         int n = nums.size();
         if(n == 1) return nums[0];
+        
         vector<int> dp(n, -1);
         
         int first = maxAmount(0, n - 2, nums, dp);
-        
-        for(int i = 0; i < n; i ++){
-            dp[i] = -1;
-        }
-        
+        for(int i = 0; i < n; i ++) dp[i] = -1;
         int second = maxAmount(1, n - 1, nums, dp);
         
         return max(first, second);
@@ -85,9 +76,7 @@ public:
         
         for(int j = i + 1; j <= n; j ++){
             int pick = nums[j];
-            if(j - 2 >= 0){
-                pick += dp[j - 2];
-            }
+            if(j - 2 >= 0) pick += dp[j - 2];
             int notPick = dp[j - 1];
             dp[j] = max(pick, notPick);
         }
