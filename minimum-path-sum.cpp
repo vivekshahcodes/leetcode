@@ -7,13 +7,8 @@ public:
     
     int minSum(int n, int m, vector<vector<int>>& grid){
         
-        if(n<0 || m<0){
-            return INT_MAX;
-        }
-        
-        if(n==0 && m==0){
-            return grid[0][0];
-        }
+        if(n<0 || m<0) return INT_MAX;
+        if(n==0 && m==0) return grid[0][0];
         
         int up = minSum(n-1,m,grid);
         int left = minSum(n,m-1,grid);
@@ -40,17 +35,9 @@ public:
     
     int minSum(int n, int m, vector<vector<int>>& grid, vector<vector<int>>& dp){
         
-        if(n<0 || m<0){
-            return INT_MAX;
-        }
-        
-        if(n==0 && m==0){
-            return grid[0][0];
-        }
-        
-        if(dp[n][m]!=-1){
-            return dp[n][m];
-        }
+        if(n<0 || m<0) return INT_MAX;
+        if(n==0 && m==0) return grid[0][0];
+        if(dp[n][m]!=-1) return dp[n][m];
         
         int up = minSum(n-1,m,grid,dp);
         int left = minSum(n,m-1,grid,dp);
@@ -92,11 +79,8 @@ public:
                     int up, left;
                     up = left = INT_MAX;
                     
-                    if(i>0)
-                        up = dp[i-1][j];
-                    
-                    if(j>0)
-                        left = dp[i][j-1];
+                    if(i>0) up = dp[i-1][j];
+                    if(j>0) left = dp[i][j-1];
 
                     dp[i][j] = min(up,left) + grid[i][j];
                 }
@@ -134,11 +118,8 @@ public:
                     int up, left;
                     up = left = INT_MAX;
                     
-                    if(i>0)
-                        up = prev[j];
-                    
-                    if(j>0)
-                        left = curr[j-1];
+                    if(i>0) up = prev[j];
+                    if(j>0) left = curr[j-1];
 
                     curr[j] = min(up,left) + grid[i][j];
                 }
