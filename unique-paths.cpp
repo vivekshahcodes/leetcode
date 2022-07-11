@@ -7,13 +7,8 @@ public:
     
     int countPaths(int i, int j, int n, int m){
         
-        if(i>=n || j>=m){
-            return 0;
-        }
-        
-        if(i==n-1 && j==m-1){
-            return 1;
-        }
+        if(i>=n || j>=m) return 0;
+        if(i==n-1 && j==m-1) return 1;
         
         return countPaths(i+1,j,n,m) + countPaths(i,j+1,n,m);
     }
@@ -34,17 +29,9 @@ public:
     
     int countPaths(int i, int j, int n, int m, vector<vector<int>>& dp){
         
-        if(i>=n || j>=m){
-            return 0;
-        }
-        
-        if(i==n-1 && j==m-1){
-            return 1;
-        }
-        
-        if(dp[i][j]!=-1){
-            return dp[i][j];
-        }
+        if(i>=n || j>=m) return 0;
+        if(i==n-1 && j==m-1) return 1;
+        if(dp[i][j]!=-1) return dp[i][j];
         
         return dp[i][j] = countPaths(i+1,j,n,m,dp) + countPaths(i,j+1,n,m,dp);
     }
@@ -71,17 +58,9 @@ public:
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
                 
-                if(i==0 && j==0){
-                    dp[0][0] = 1;
-                }
-                
-                if(i>0){
-                    dp[i][j] += dp[i-1][j];
-                }
-                
-                if(j>0){
-                    dp[i][j] += dp[i][j-1];
-                }
+                if(i==0 && j==0) dp[0][0] = 1;
+                if(i>0) dp[i][j] += dp[i-1][j];
+                if(j>0) dp[i][j] += dp[i][j-1];
             }
         }
         
@@ -105,17 +84,9 @@ public:
             vector<int> temp(n, 0);
             for(int j=0;j<n;j++){
                 
-                if(i==0 && j==0){
-                    temp[j] = 1;
-                }
-                
-                if(i>0){
-                    temp[j] += prev[j];
-                }
-                
-                if(j>0){
-                    temp[j] += temp[j-1];
-                }
+                if(i==0 && j==0) temp[j] = 1;
+                if(i>0) temp[j] += prev[j];
+                if(j>0) temp[j] += temp[j-1];
             }
             prev = temp;
         }
