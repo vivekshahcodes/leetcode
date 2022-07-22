@@ -7,23 +7,16 @@ public:
     
     int maxCherries(int i, int j, int k, int n, int m, vector<vector<int>>& grid){
         
-        if(i==n || j<0 || j>=m || k<0 || k>=m){
-            return 0;
-        }
+        if(i==n || j<0 || j>=m || k<0 || k>=m) return 0;
         
         int ans = 0;
         
         for(int x=-1;x<=1;x++){
-            for(int y=-1;y<=1;y++){
-                ans = max(ans,maxCherries(i+1,j+x,k+y,n,m,grid));
-            }
+            for(int y=-1;y<=1;y++) ans = max(ans,maxCherries(i+1,j+x,k+y,n,m,grid));
         }
         
-        if(j==k){
-            ans += grid[i][j];
-        }else{
-            ans += grid[i][j] + grid[i][k];
-        }
+        if(j==k) ans += grid[i][j];
+        else ans += grid[i][j] + grid[i][k];
         
         return ans;
     }
@@ -47,27 +40,17 @@ public:
     
     int maxCherries(int i, int j, int k, int n, int m, vector<vector<int>>& grid, vector<vector<vector<int>>>& dp){
         
-        if(i==n || j<0 || j>=m || k<0 || k>=m){
-            return 0;
-        }
-        
-        if(dp[i][j][k]!=-1){
-            return dp[i][j][k];
-        }
+        if(i==n || j<0 || j>=m || k<0 || k>=m) return 0;
+        if(dp[i][j][k]!=-1) return dp[i][j][k];
         
         int ans = 0;
         
         for(int x=-1;x<=1;x++){
-            for(int y=-1;y<=1;y++){
-                ans = max(ans,maxCherries(i+1,j+x,k+y,n,m,grid,dp));
-            }
+            for(int y=-1;y<=1;y++) ans = max(ans,maxCherries(i+1,j+x,k+y,n,m,grid,dp));
         }
         
-        if(j==k){
-            ans += grid[i][j];
-        }else{
-            ans += grid[i][j] + grid[i][k];
-        }
+        if(j==k) ans += grid[i][j];
+        else ans += grid[i][j] + grid[i][k];
         
         return dp[i][j][k] = ans;
     }
@@ -100,11 +83,8 @@ public:
         
         for(int j=0;j<m;j++){
             for(int k=0;k<m;k++){
-                if(j==k){
-                    dp[n-1][j][k] = grid[n-1][j];
-                }else{
-                    dp[n-1][j][k] = grid[n-1][j] + grid[n-1][k];
-                }
+                if(j==k) dp[n-1][j][k] = grid[n-1][j];
+                else dp[n-1][j][k] = grid[n-1][j] + grid[n-1][k];
             }
         }
         
@@ -113,16 +93,12 @@ public:
                 for(int k=0;k<m;k++){
                     
                     int add; 
-                    if(j==k)
-                        add = grid[i][j];
-                    else
-                        add = grid[i][j] + grid[i][k];
+                    if(j==k) add = grid[i][j];
+                    else add = grid[i][j] + grid[i][k];
                     
                     for(int x=-1;x<=1;x++){
                         for(int y=-1;y<=1;y++){
-                            if(j+x<m && j+x>=0 && k+y<m && k+y>=0){
-                                dp[i][j][k] = max(dp[i][j][k], dp[i+1][j+x][k+y]+add);
-                            }
+                            if(j+x<m && j+x>=0 && k+y<m && k+y>=0) dp[i][j][k] = max(dp[i][j][k], dp[i+1][j+x][k+y]+add);
                         }
                     }
                 }
@@ -151,11 +127,8 @@ public:
         
         for(int j=0;j<m;j++){
             for(int k=0;k<m;k++){
-                if(j==k){
-                    next[j][k] = grid[n-1][j];
-                }else{
-                    next[j][k] = grid[n-1][j] + grid[n-1][k];
-                }
+                if(j==k) next[j][k] = grid[n-1][j];
+                else next[j][k] = grid[n-1][j] + grid[n-1][k];
             }
         }
         
@@ -164,16 +137,12 @@ public:
                 for(int k=0;k<m;k++){
                     
                     int add; 
-                    if(j==k)
-                        add = grid[i][j];
-                    else
-                        add = grid[i][j] + grid[i][k];
+                    if(j==k) add = grid[i][j];
+                    else add = grid[i][j] + grid[i][k];
                     
                     for(int x=-1;x<=1;x++){
                         for(int y=-1;y<=1;y++){
-                            if(j+x<m && j+x>=0 && k+y<m && k+y>=0){
-                                curr[j][k] = max(curr[j][k], next[j+x][k+y]+add);
-                            }
+                            if(j+x<m && j+x>=0 && k+y<m && k+y>=0) curr[j][k] = max(curr[j][k], next[j+x][k+y]+add);
                         }
                     }
                 }
